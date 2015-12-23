@@ -53,12 +53,10 @@ loop do
       results.each do |val_pairs|
         puts "%-#{results.max_by{|i|i[0].length}[0].length}s %s\n" % val_pairs
       end
-      ask "Hit [Enter] to continue"
     else
       smile = Smiley.where(name: input[0]).pluck(:smile).first
       smile ? puts(smile) : puts("Smile not found")
     end
-    puts
   when 2
     case input[0]
     when "del"
