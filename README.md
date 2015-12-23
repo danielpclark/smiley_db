@@ -1,6 +1,8 @@
 # smiley_db
 ASCII command line database for storing smileys you find.  Copy and paste any smiley into your terminal to save it!
 
+![alt text](https://github.com/danielpclark/smiley_db/blob/master/example.png "CLI example")
+
 #Getting Started
 
 ```
