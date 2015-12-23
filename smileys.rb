@@ -7,7 +7,6 @@ require 'active_record'
 require "highline/import"
 #require "logger"
 
-
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'smileys.db')
 ActiveRecord::Base.logger = nil #Logger.new(STDOUT)
 
@@ -34,22 +33,20 @@ loop do
   case input.length
   when 1
     smile = Smiley.where(name: input[0]).pluck(:smile).first
+    puts
     if smile
-      puts
       puts smile
-      puts
     else
-      puts
       puts "Smile not found"
-      puts
     end
+    puts
   when 2
     smile = Smiley.create(name: input[0], smile: input[1])
     if smile.errors.any?
       puts smile.errors
     else
       puts "Saved!"
-      puts
     end
+    puts
   end
 end
