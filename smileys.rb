@@ -32,20 +32,29 @@ loop do
   input = input.split(/ /)
   case input.length
   when 1
-    smile = Smiley.where(name: input[0]).pluck(:smile).first
     puts
-    if smile
-      puts smile
+    case input[0]
+    when "all"
+      puts Smiley.pluck(:smile).join(" ")
     else
-      puts "Smile not found"
+      smile = Smiley.where(name: input[0]).pluck(:smile).first
+      smile ? puts(smile) : puts("Smile not found")
     end
     puts
   when 2
-    smile = Smiley.create(name: input[0], smile: input[1])
-    if smile.errors.any?
-      puts smile.errors
+    case input[0]
+    when "del"
+      Smiley.where(name: input[1]).destroy_all
+      puts "Removed!"
     else
-      puts "Saved!"
+      smile = Smiley.where(name: input[0]).first_or_initialize
+      smile.update(smile: input[1])
+      smile.save
+      if smile.errors.any?
+        puts smile.errors
+      else
+        puts "Saved!"
+      end
     end
     puts
   end
