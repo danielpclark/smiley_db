@@ -4,6 +4,7 @@ ASCII command line database for storing smileys you find.  Copy and paste any sm
 #Getting Started
 
 ```
+git clone https://github.com/danielpclark/smiley_db.git
 gem install activerecord highline
 ruby smiley.rb
 ```
