@@ -36,6 +36,11 @@ loop do
     case input[0]
     when "all"
       puts Smiley.pluck(:smile).join(" ")
+    when "everything"
+      results = Smiley.pluck(:name, :smile)
+      results.each do |val_pairs|
+        puts "%-#{results.max_by{|i|i[0].length}[0].length}s %s\n" % val_pairs
+      end
     else
       smile = Smiley.where(name: input[0]).pluck(:smile).first
       smile ? puts(smile) : puts("Smile not found")
