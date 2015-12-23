@@ -5,7 +5,7 @@ ASCII command line database for storing smileys you find.  Copy and paste any sm
 
 ```
 gem install activerecord highline
-ruby smiley
+ruby smiley.rb
 ```
 
 #License
