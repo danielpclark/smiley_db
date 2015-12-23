@@ -21,19 +21,31 @@ class Smiley < ActiveRecord::Base
 end
 
 horizontal_line = "~_" * 24 + "~"
+menu = <<-DOC
+#{horizontal_line}
+   <name>             lookup smiley
+   <name> <smiley>    create smiley
+   all                prints all smileys inline
+   everything         prints catalog of name: smiley
+   del <name>         delete smiley
+   h, help            this menu
+   q                  exit
+#{horizontal_line}
+DOC
+
+puts horizontal_line, "\t  Smiley DB by Daniel P. Clark"
+puts menu
 
 loop do
-  puts horizontal_line
-  puts "Enter name to retrieve smiley"
-  puts "Enter name followed by smiley to store smiley"
-  puts "Enter q to quit"
-  input = ask horizontal_line + "\n\n"
+  input = ask "\n:> "
   break if input == "q"
   input = input.split(/ /)
   case input.length
   when 1
     puts
     case input[0]
+    when "h", "help"
+      puts menu
     when "all"
       puts Smiley.pluck(:smile).join(" ")
     when "everything"
@@ -41,6 +53,7 @@ loop do
       results.each do |val_pairs|
         puts "%-#{results.max_by{|i|i[0].length}[0].length}s %s\n" % val_pairs
       end
+      ask "Hit [Enter] to continue"
     else
       smile = Smiley.where(name: input[0]).pluck(:smile).first
       smile ? puts(smile) : puts("Smile not found")

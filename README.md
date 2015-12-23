@@ -9,5 +9,15 @@ gem install activerecord highline
 ruby smiley.rb
 ```
 
+#Usage
+
+```ruby
+<name>          # => lookup smiley
+<name> <smiley> # => create smiley
+all             # => prints all smileys inline
+everything      # => prints catalog of name: smiley
+del <name>      # => delete smiley
+```
+
 #License
 MIT (see LICENSE file)
