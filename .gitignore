@@ -1,5 +1,6 @@
 smileys.db
 *.gem
+**/*.swp
 *.rbc
 /.config
 /coverage/
