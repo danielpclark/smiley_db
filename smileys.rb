@@ -37,32 +37,32 @@ puts horizontal_line, "\t  Smiley DB by Daniel P. Clark"
 puts menu
 
 loop do
-  input = ask "\n:> "
-  break if input == "q"
-  input = input.split(/ /)
-  case input.length
-  when 1
-    puts
-    case input[0]
-    when "h", "help"
-      puts menu
-    when "all"
-      puts Smiley.pluck(:smile).join(" ")
-    when "everything"
-      results = Smiley.pluck(:name, :smile)
-      results.each do |val_pairs|
-        puts "%-#{results.max_by{|i|i[0].length}[0].length}s %s\n" % val_pairs
-      end
-    else
+  input = ask("\n:> ").split(/ /)
+  puts
+  case input[0]
+  when "q", "quit", "exit"
+    break
+  when "h", "help"
+    puts menu
+  when "all"
+    puts Smiley.pluck(:smile).join(" ")
+  when "everything"
+    results = Smiley.pluck(:name, :smile)
+    results.each do |val_pairs|
+      puts "%-#{results.max_by{|i|i[0].length}[0].length}s %s\n" % val_pairs
+    end
+  when "del"
+    if input.length != 2
+      puts "You need to provide a name for deletion"
+      next
+    end
+    Smiley.where(name: input[1]).destroy_all
+    puts "Removed!"
+  else
+    if input.length == 1
       smile = Smiley.where(name: input[0]).pluck(:smile).first
       smile ? puts(smile) : puts("Smile not found")
-    end
-  when 2
-    case input[0]
-    when "del"
-      Smiley.where(name: input[1]).destroy_all
-      puts "Removed!"
-    else
+    elsif input.length == 2
       smile = Smiley.where(name: input[0]).first_or_initialize
       smile.update(smile: input[1])
       smile.save
@@ -72,6 +72,5 @@ loop do
         puts "Saved!"
       end
     end
-    puts
   end
 end
