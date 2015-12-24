@@ -20,6 +20,7 @@ all             # => prints all smileys inline
 everything      # => prints catalog of name: smiley
 del <name>      # => delete smiley
 ```
+**all** and **everything** accept parameters `sort` and `group <word>`
 
 #License
 MIT (see LICENSE file)

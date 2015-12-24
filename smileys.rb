@@ -20,6 +20,25 @@ end unless ActiveRecord::Base.connection.table_exists? 'smileys'
 class Smiley < ActiveRecord::Base
 end
 
+everything = ->{Smiley.pluck(:name, :smile)}
+smiles = ->results{results.map(&:last)}
+
+group = ->results,input{
+  if input.include? "group"
+    rule = input.index("group") + 1
+    results = results.keep_if {|n,s|
+      n[/#{input[rule]}/]
+    }
+  end
+  results
+}
+sort = ->results,input{
+  if input.include? "sort"
+    results = results.sort_by {|n,s| n}
+  end
+  results
+}
+
 horizontal_line = "~_" * 24 + "~"
 menu = <<-DOC
 #{horizontal_line}
@@ -45,9 +64,9 @@ loop do
   when "h", "help"
     puts menu
   when "all"
-    puts Smiley.pluck(:smile).join(" ")
+    puts smiles[group[sort[everything[],input],input]].join(" ")
   when "everything"
-    results = Smiley.pluck(:name, :smile)
+    results = group[sort[everything[],input],input]
     results.each do |val_pairs|
       puts "%-#{results.max_by{|i|i[0].length}[0].length}s %s\n" % val_pairs
     end
