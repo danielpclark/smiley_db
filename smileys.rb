@@ -35,7 +35,7 @@ sort = ->results,input{
   results
 }
 smiles = ->results{results.map(&:last)}
-process = ->input{group[sort[Smiley.pluck(:name, :smile),input],input]}
+process = ->input{group.(sort.(Smiley.pluck(:name, :smile),input),input)}
 #---------
 
 horizontal_line = "~_" * 24 + "~"
