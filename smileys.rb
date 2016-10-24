@@ -7,7 +7,7 @@ require 'active_record'
 require "highline/import"
 #require "logger"
 
-ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'smileys.db')
+ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: File.join(ENV['SMILEY_DB_PATH'] || '.', 'smileys.db'))
 ActiveRecord::Base.logger = nil #Logger.new(STDOUT)
 
 ActiveRecord::Schema.define do
